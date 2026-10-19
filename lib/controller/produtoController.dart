@@ -1,6 +1,9 @@
 // ignore: file_names
-import '../models/produto.dart';
+import 'package:reaproveita/models/Produto.dart';
+
+import '../models/produto.dart' hide Produto;
 import '../models/vendedor.dart';
+
 
 class ProdutoController {
   final List<Produto> produtos = [];

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:reaproveita/models/Produto.dart';
 import '../controller/produtoController.dart';
 import '../models/produto.dart';
 import '../models/vendedor.dart';
 import '../controller/produtoController.dart';
+import 'package:reaproveita/models/produto.dart';
 
 
 class CadastroProduto extends StatefulWidget {
