@@ -1,8 +1,16 @@
 import 'vendedor.dart';
 
+enum UnidadeMedida {
+  unidade,
+  quilo,
+  grama,
+  litro,
+  mililitro,
+}
+
 class Produto {
   String nome;
-  String unidadeMedida;
+  UnidadeMedida unidadeMedida;
   String validade;
   String fabricacao;
   double preco;

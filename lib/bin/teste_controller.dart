@@ -1,5 +1,6 @@
 import 'package:reaproveita/controller/vendedorController.dart';
 import 'package:reaproveita/controller/produtoController.dart';
+import '../models/produto.dart';
 
 void main() {
 
@@ -21,7 +22,7 @@ void main() {
     final produto = produtoController.cadastrar(
       vendedor: vendedor,
       nome: 'Bolo de cenoura',
-      unidadeMedida: 'Unidade',
+      unidadeMedida: UnidadeMedida.unidade,
       validade: '22/10/2026',
       fabricacao: '19/10/2026',
       preco: 15.00,
@@ -32,6 +33,7 @@ void main() {
     print('Produto cadastrado!');
     print('Nome: ${produto.nome}');
     print('Vendedor: ${produto.vendedor.nome}');
+    print('Unidade de medida: ${produto.unidadeMedida.name}');
     print('Preço: R\$ ${produto.preco.toStringAsFixed(2)}');
     print('Produtos na lista: ${produtoController.produtos.length}');
     print('Dados validados e vendedor criado!');

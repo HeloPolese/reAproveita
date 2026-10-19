@@ -8,7 +8,7 @@ class ProdutoController {
   Produto cadastrar({
     required Vendedor vendedor,
     required String nome,
-    required String unidadeMedida,
+    required UnidadeMedida unidadeMedida,
     required String validade,
     required String fabricacao,
     required double preco,
@@ -17,7 +17,6 @@ class ProdutoController {
     String imagem = '',
   }) {
     if (nome.trim().isEmpty ||
-        unidadeMedida.trim().isEmpty ||
         validade.trim().isEmpty ||
         fabricacao.trim().isEmpty ||
         descricao.trim().isEmpty) {
@@ -34,7 +33,7 @@ class ProdutoController {
 
     final produto = Produto(
       nome: nome.trim(),
-      unidadeMedida: unidadeMedida.trim(),
+      unidadeMedida: unidadeMedida,
       validade: validade.trim(),
       fabricacao: fabricacao.trim(),
       preco: preco,
