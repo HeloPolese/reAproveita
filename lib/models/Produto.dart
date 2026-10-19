@@ -1,4 +1,4 @@
-import 'vendedor.dart';
+import 'Vendedor.dart';
 
 class Produto {
   String nome;

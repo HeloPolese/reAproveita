@@ -1,5 +1,4 @@
-
-import 'produto.dart';
+import 'Produto.dart';
 
 class ItemCarrinho {
   Produto produto;
