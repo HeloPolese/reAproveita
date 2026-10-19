@@ -11,11 +11,7 @@ class HomePage extends StatefulWidget {
   final List<Produto> produtos;
   final Carrinho carrinho;
 
-  const HomePage({
-    super.key,
-    required this.produtos,
-    required this.carrinho,
-  });
+  const HomePage({super.key, required this.produtos, required this.carrinho});
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -97,9 +93,7 @@ class _HomePageState extends State<HomePage> {
     if (produto.quantidadeDisponivel <= 0) return;
 
     final listagem = widget.carrinho.listagem;
-    final index = listagem.indexWhere(
-      (item) => item.produto == produto,
-    );
+    final index = listagem.indexWhere((item) => item.produto == produto);
 
     if (index >= 0) {
       final item = listagem[index];
@@ -114,9 +108,7 @@ class _HomePageState extends State<HomePage> {
       setState(() => item.quantidade++);
     } else {
       setState(() {
-        widget.carrinho.adicionarProduto(
-          ItemCarrinho(produto: produto),
-        );
+        widget.carrinho.adicionarProduto(ItemCarrinho(produto: produto));
       });
     }
 
@@ -145,9 +137,7 @@ class _HomePageState extends State<HomePage> {
   Future<void> _abrirCadastro() async {
     final usuario = await Navigator.push<Vendedor>(
       context,
-      MaterialPageRoute(
-        builder: (_) => const CadastroPage(),
-      ),
+      MaterialPageRoute(builder: (_) => const CadastroPage()),
     );
 
     if (!mounted || usuario == null) return;
@@ -167,9 +157,7 @@ class _HomePageState extends State<HomePage> {
 
     final atualizado = await Navigator.push<Vendedor>(
       context,
-      MaterialPageRoute(
-        builder: (_) => CadastroPage(vendedorAtual: usuario),
-      ),
+      MaterialPageRoute(builder: (_) => CadastroPage(vendedorAtual: usuario)),
     );
 
     if (!mounted || atualizado == null) return;
@@ -242,9 +230,7 @@ class _HomePageState extends State<HomePage> {
 
     final produto = await Navigator.push<Produto>(
       context,
-      MaterialPageRoute(
-        builder: (_) => CadastroProdutoPage(vendedor: usuario),
-      ),
+      MaterialPageRoute(builder: (_) => CadastroProdutoPage(vendedor: usuario)),
     );
 
     if (!mounted || produto == null) return;
@@ -268,10 +254,8 @@ class _HomePageState extends State<HomePage> {
     final atualizado = await Navigator.push<Produto>(
       context,
       MaterialPageRoute(
-        builder: (_) => CadastroProdutoPage(
-          vendedor: usuario,
-          produtoAtual: produto,
-        ),
+        builder: (_) =>
+            CadastroProdutoPage(vendedor: usuario, produtoAtual: produto),
       ),
     );
 
@@ -286,9 +270,7 @@ class _HomePageState extends State<HomePage> {
         }
       }
 
-      widget.carrinho.listagem.removeWhere(
-        (item) => item.quantidade <= 0,
-      );
+      widget.carrinho.listagem.removeWhere((item) => item.quantidade <= 0);
     });
 
     _mostrarMensagem('Produto atualizado.');
@@ -316,10 +298,7 @@ class _HomePageState extends State<HomePage> {
           ),
           TextButton(
             onPressed: () => Navigator.pop(contextoDialogo, true),
-            child: const Text(
-              'Excluir',
-              style: TextStyle(color: Colors.red),
-            ),
+            child: const Text('Excluir', style: TextStyle(color: Colors.red)),
           ),
         ],
       ),
@@ -362,9 +341,7 @@ class _HomePageState extends State<HomePage> {
 
           // O ícone de pessoa continua aparecendo.
           IconButton(
-            tooltip: _usuarioLogado == null
-                ? 'Criar conta'
-                : 'Meu perfil',
+            tooltip: _usuarioLogado == null ? 'Criar conta' : 'Meu perfil',
             onPressed: _abrirConta,
             icon: const Icon(Icons.person),
           ),
@@ -380,9 +357,7 @@ class _HomePageState extends State<HomePage> {
           const SizedBox(width: 4),
         ],
       ),
-      body: produtos.isEmpty
-          ? _buildSemResultados()
-          : _buildLista(produtos),
+      body: produtos.isEmpty ? _buildSemResultados() : _buildLista(produtos),
     );
   }
 
@@ -405,11 +380,7 @@ class _HomePageState extends State<HomePage> {
           suffixIcon: _busca.isEmpty
               ? null
               : IconButton(
-                  icon: Icon(
-                    Icons.close,
-                    size: 20,
-                    color: Colors.grey[600],
-                  ),
+                  icon: Icon(Icons.close, size: 20, color: Colors.grey[600]),
                   onPressed: () {
                     _buscaController.clear();
                     setState(() => _busca = '');
@@ -455,9 +426,7 @@ class _HomePageState extends State<HomePage> {
     return Card(
       margin: const EdgeInsets.only(bottom: 12),
       elevation: 2,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12),
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       child: Padding(
         padding: const EdgeInsets.all(12),
         child: Row(
@@ -486,22 +455,17 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                   const SizedBox(height: 2),
-                  Text(
-                    'Vendedor: ${produto.vendedor.nome}',
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                      fontSize: 12,
-                      color: Colors.grey[600],
+                  if (produto.descricao.trim().isNotEmpty)
+                    Text(
+                      produto.descricao,
+                      maxLines: 3,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(fontSize: 12, color: Colors.grey[600]),
                     ),
-                  ),
                   const SizedBox(height: 4),
                   Text(
                     'Validade: ${produto.validade}',
-                    style: TextStyle(
-                      fontSize: 12,
-                      color: Colors.grey[600],
-                    ),
+                    style: TextStyle(fontSize: 12, color: Colors.grey[600]),
                   ),
                   Text(
                     semEstoque
@@ -530,9 +494,7 @@ class _HomePageState extends State<HomePage> {
                         style: ElevatedButton.styleFrom(
                           backgroundColor: verde,
                           foregroundColor: Colors.white,
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 12,
-                          ),
+                          padding: const EdgeInsets.symmetric(horizontal: 12),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(8),
                           ),
@@ -540,10 +502,7 @@ class _HomePageState extends State<HomePage> {
                         onPressed: semEstoque
                             ? null
                             : () => _adicionarAoCarrinho(produto),
-                        icon: const Icon(
-                          Icons.add_shopping_cart,
-                          size: 18,
-                        ),
+                        icon: const Icon(Icons.add_shopping_cart, size: 18),
                         label: const Text('Adicionar'),
                       ),
                     ],
@@ -594,10 +553,7 @@ class _HomePageState extends State<HomePage> {
   Widget _buildImagem(String caminho) {
     final placeholder = Container(
       color: Colors.grey[200],
-      child: const Icon(
-        Icons.image_not_supported,
-        color: Colors.grey,
-      ),
+      child: const Icon(Icons.image_not_supported, color: Colors.grey),
     );
 
     if (caminho.isEmpty) return placeholder;

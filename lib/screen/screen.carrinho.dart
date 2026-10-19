@@ -345,9 +345,7 @@ class _CarrinhoPageState extends State<CarrinhoPage> {
                     borderRadius: BorderRadius.circular(10),
                   ),
                 ),
-                onPressed: () {
-                  _mostrarMensagemPix();
-                },
+               onPressed: _finalizarCompra,
                 child: const Text(
                   'Finalizar compra',
                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
@@ -383,4 +381,51 @@ class _CarrinhoPageState extends State<CarrinhoPage> {
     if (!mounted) return;
     setState(() => widget.carrinho.limparCarrinho());
   }
+
+  void _finalizarCompra() {
+  final itens = widget.carrinho.listagem;
+
+  if (itens.isEmpty) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('Seu carrinho está vazio.')),
+    );
+    return;
+  }
+
+  // Confere todos os itens antes de alterar o estoque.
+  for (final item in itens) {
+    if (item.quantidade <= 0 ||
+        item.quantidade > item.produto.quantidadeDisponivel) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            'Confira a quantidade de ${item.produto.nome}. '
+            'Estoque disponível: ${item.produto.quantidadeDisponivel}.',
+          ),
+        ),
+      );
+      return;
+    }
+  }
+
+  setState(() {
+    // Desconta do estoque a quantidade comprada.
+    for (final item in itens) {
+      item.produto.quantidadeDisponivel -= item.quantidade;
+    }
+
+    // Esvazia o carrinho depois da compra.
+    itens.clear();
+  });
+
+  ScaffoldMessenger.of(context).showSnackBar(
+    const SnackBar(
+      content: Text('Compra finalizada com sucesso!'),
+    ),
+  );
+
+  // Volta para a Home, que atualiza a lista.
+  Navigator.pop(context);
 }
+}
+
