@@ -1,6 +1,7 @@
 import '../models/vendedor.dart';
 
 class VendedorController {
+  final List<Vendedor> vendedores = [];
   Vendedor cadastrar({
     required String nome,
     required String pix,
@@ -31,6 +32,8 @@ class VendedorController {
       telefone: telefone.trim(),
       senha: senha,
     );
+    vendedores.add(vendedor);
+
     return vendedor;
   }
 }
