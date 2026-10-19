@@ -1,4 +1,4 @@
-import 'Vendedor.dart';
+import 'vendedor.dart';
 
 class Produto {
   String nome;
@@ -9,8 +9,8 @@ class Produto {
   int quantidadeDisponivel;
   String descricao;
   String imagem;
-  bool adicionarAoCarrinho;
   Vendedor vendedor;
+  bool adicionarAoCarrinho;
 
   Produto({
     required this.nome,

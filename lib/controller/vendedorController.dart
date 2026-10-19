@@ -1,4 +1,4 @@
-import '../models/Vendedor.dart';
+import '../models/vendedor.dart';
 
 class VendedorController {
   Vendedor cadastrar({
