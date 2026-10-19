@@ -1,5 +1,5 @@
 // ignore: file_names
-import 'package:reaproveita/models/Produto.dart';
+import 'package:reaproveita/models/produto.dart';
 
 import '../models/produto.dart' hide Produto;
 import '../models/vendedor.dart';

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:reaproveita/models/Produto.dart';
+import 'package:reaproveita/models/produto.dart';
 import '../controller/produtoController.dart';
 import '../models/produto.dart';
 import '../models/vendedor.dart';

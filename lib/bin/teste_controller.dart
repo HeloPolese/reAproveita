@@ -1,6 +1,6 @@
 import 'package:reaproveita/controller/vendedorController.dart';
 import 'package:reaproveita/controller/produtoController.dart';
-import 'package:reaproveita/models/Produto.dart';
+import 'package:reaproveita/models/produto.dart';
 
 import '../models/produto.dart';
 
