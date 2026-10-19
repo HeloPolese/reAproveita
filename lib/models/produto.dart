@@ -11,7 +11,7 @@ enum UnidadeMedida {
 class Produto {
   String nome;
   UnidadeMedida unidadeMedida;
-  final String categoria;
+  String categoria;
   String validade;
   String fabricacao;
   double preco;
