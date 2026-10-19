@@ -34,7 +34,7 @@ class MyApp extends StatelessWidget {
     final produtos = <Produto>[
       Produto(
         nome: 'Pão francês (sobra do dia)',
-        unidadeMedida: 'kg',
+        unidadeMedida: UnidadeMedida.quilo,
         validade: '20/10/2026',
         fabricacao: '19/10/2026',
         preco: 8.50,
@@ -45,7 +45,7 @@ class MyApp extends StatelessWidget {
       ),
       Produto(
         nome: 'Banana prata',
-        unidadeMedida: 'kg',
+        unidadeMedida: UnidadeMedida.quilo,
         validade: '23/10/2026',
         fabricacao: '15/10/2026',
         preco: 5.99,
@@ -56,7 +56,7 @@ class MyApp extends StatelessWidget {
       ),
       Produto(
         nome: 'Leite integral 1L',
-        unidadeMedida: 'un',
+        unidadeMedida: UnidadeMedida.unidade,
         validade: '25/10/2026',
         fabricacao: '10/10/2026',
         preco: 4.75,
@@ -67,7 +67,7 @@ class MyApp extends StatelessWidget {
       ),
       Produto(
         nome: 'Bolo de cenoura',
-        unidadeMedida: 'un',
+        unidadeMedida: UnidadeMedida.unidade,
         validade: '21/10/2026',
         fabricacao: '19/10/2026',
         preco: 15.00,
@@ -78,7 +78,7 @@ class MyApp extends StatelessWidget {
       ),
       Produto(
         nome: 'Tomate italiano',
-        unidadeMedida: 'kg',
+        unidadeMedida: UnidadeMedida.quilo,
         validade: '24/10/2026',
         fabricacao: '17/10/2026',
         preco: 7.20,

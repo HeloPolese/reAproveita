@@ -1,16 +1,24 @@
 import 'vendedor.dart';
 
+enum UnidadeMedida {
+  unidade,
+  quilo,
+  grama,
+  litro,
+  mililitro,
+}
+
 class Produto {
   String nome;
-  String unidadeMedida;
+  UnidadeMedida unidadeMedida;
   String validade;
   String fabricacao;
   double preco;
   int quantidadeDisponivel;
   String descricao;
   String imagem;
-  bool adicionarAoCarrinho;
   Vendedor vendedor;
+  bool adicionarAoCarrinho;
 
   Produto({
     required this.nome,
@@ -19,9 +27,9 @@ class Produto {
     required this.fabricacao,
     required this.preco,
     required this.quantidadeDisponivel,
-    required this.descricao,
-    required this.imagem,
     required this.vendedor,
+    this.descricao = '',
+    this.imagem = '',
     this.adicionarAoCarrinho = false,
   });
 }
