@@ -1,20 +1,17 @@
 import 'package:flutter/material.dart';
+import 'controller/vendedorController.dart';
+import 'views/cadastroVendedor.dart';
 
 void main() {
-  runApp(const MyApp());
-}
+  final vendedorController = VendedorController();
 
-
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: Scaffold(
-
+  runApp(
+    MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'Reaproveita',
+      home: CadastroVendedor(
+        controller: vendedorController,
       ),
-    );
-  }
+    ),
+  );
 }
