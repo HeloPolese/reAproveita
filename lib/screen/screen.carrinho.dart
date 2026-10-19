@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:reaproveita/models/carrinho.dart';
 import 'package:reaproveita/models/itemCarrinho.dart';
@@ -82,7 +84,18 @@ class _CarrinhoPageState extends State<CarrinhoPage> {
       appBar: AppBar(
         backgroundColor: verde,
         foregroundColor: Colors.white,
-        title: const Text('Meu Carrinho'),
+          title: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Image.network(
+            'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQkVexxzbg3jvRGCioSPljjTfsjn7CWC45h3L40QZwXjQ&s=10',
+            height: 32,
+            errorBuilder: (_, __, ___) => const SizedBox.shrink(),
+          ),
+          const SizedBox(width: 8),
+          const Text('Meu Carrinho'),
+        ],
+      ),
         centerTitle: true,
         actions: [
           if (itens.isNotEmpty)

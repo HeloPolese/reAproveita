@@ -11,7 +11,7 @@ class Carrinho {
     double total = 0;
 
     for (ItemCarrinho item in listagem) {
-      total += item.produto.preco;
+      total += item.subtotal;
     }
 
     return total;
