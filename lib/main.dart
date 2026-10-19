@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:reaproveita/models/carrinho.dart';
-import 'package:reaproveita/models/ItemCarrinho.dart';
+import 'package:reaproveita/models/itemCarrinho.dart';
 import 'package:reaproveita/models/produto.dart';
 import 'package:reaproveita/models/vendedor.dart';
 import 'package:reaproveita/screen/screen.carrinho.dart';

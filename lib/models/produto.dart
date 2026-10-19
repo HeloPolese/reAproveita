@@ -1,4 +1,4 @@
-import '../models/vendedor.dart';
+import 'vendedor.dart';
 
 class Produto {
   String nome;
@@ -24,9 +24,4 @@ class Produto {
     required this.vendedor,
     this.adicionarAoCarrinho = false,
   });
-
-  int get quantidade{
-    return this.quantidadeDisponivel;
-  }
-
 }

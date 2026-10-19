@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:reaproveita/models/carrinho.dart';
-import 'package:reaproveita/models/ItemCarrinho.dart';
+import 'package:reaproveita/models/itemCarrinho.dart';
 
 class CarrinhoPage extends StatefulWidget {
   final Carrinho carrinho;
