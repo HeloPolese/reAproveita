@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:reaproveita/models/produto.dart';
 import 'package:reaproveita/models/vendedor.dart';
+// ignore: duplicate_import
 import 'package:reaproveita/models/produto.dart';
 
 class CadastroProdutoPage extends StatefulWidget {
@@ -105,6 +106,7 @@ class _CadastroProdutoPageState extends State<CadastroProdutoPage> {
       nome: nome.text.trim(),
       unidadeMedida: unidade,
       validade: validade.text.trim(),
+      categoria: 'Frutas',
       fabricacao: fabricacao.text.trim(),
       preco: valor,
       quantidadeDisponivel: estoque,

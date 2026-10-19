@@ -1,5 +1,4 @@
 import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:reaproveita/models/carrinho.dart';
 import 'package:reaproveita/models/itemCarrinho.dart';

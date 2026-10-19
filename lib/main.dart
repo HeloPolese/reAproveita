@@ -34,28 +34,31 @@ class MyApp extends StatelessWidget {
     final produtos = <Produto>[
       Produto(
         nome: 'Pão francês (sobra do dia)',
+        categoria: 'Padaria',
         unidadeMedida: UnidadeMedida.quilo,
         validade: '20/10/2026',
         fabricacao: '19/10/2026',
         preco: 8.50,
         quantidadeDisponivel: 10,
         descricao: 'Pão francês fresco do dia.',
-        imagem: '', // testa o placeholder de imagem
+        imagem: '',
         vendedor: padaria,
       ),
       Produto(
         nome: 'Banana prata',
+        categoria: 'Frutas',
         unidadeMedida: UnidadeMedida.quilo,
         validade: '23/10/2026',
         fabricacao: '15/10/2026',
         preco: 5.99,
-        quantidadeDisponivel: 3, // testa o limite de estoque
+        quantidadeDisponivel: 3,
         descricao: 'Bananas maduras, ótimas para vitaminas.',
         imagem: 'https://picsum.photos/200',
         vendedor: mercado,
       ),
       Produto(
         nome: 'Leite integral 1L',
+        categoria: 'Laticínios',
         unidadeMedida: UnidadeMedida.unidade,
         validade: '25/10/2026',
         fabricacao: '10/10/2026',
@@ -67,17 +70,19 @@ class MyApp extends StatelessWidget {
       ),
       Produto(
         nome: 'Bolo de cenoura',
+        categoria: 'Padaria',
         unidadeMedida: UnidadeMedida.unidade,
         validade: '21/10/2026',
         fabricacao: '19/10/2026',
         preco: 15.00,
-        quantidadeDisponivel: 0, // testa o estado "Indisponível"
+        quantidadeDisponivel: 0,
         descricao: 'Bolo de cenoura com cobertura de chocolate.',
         imagem: 'https://picsum.photos/202',
         vendedor: padaria,
       ),
       Produto(
         nome: 'Tomate italiano',
+        categoria: 'Legumes e Verduras',
         unidadeMedida: UnidadeMedida.quilo,
         validade: '24/10/2026',
         fabricacao: '17/10/2026',

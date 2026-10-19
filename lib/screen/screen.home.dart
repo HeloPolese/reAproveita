@@ -25,6 +25,28 @@ class _HomePageState extends State<HomePage> {
   String _busca = '';
   Vendedor? _usuarioLogado;
 
+  String _categoriaSelecionada = 'Todas';
+
+  List<String> get _categorias {
+    final categorias =
+        widget.produtos
+            .map((p) => p.categoria.trim())
+            .where((categoria) => categoria.isNotEmpty && categoria != 'Todas')
+            .toSet()
+            .toList()
+          ..sort();
+
+    return ['Todas', ...categorias];
+  }
+
+  // Se a categoria desaparecer após uma edição ou exclusão,
+  // volta a mostrar todas.
+  String get _categoriaAtiva {
+    return _categorias.contains(_categoriaSelecionada)
+        ? _categoriaSelecionada
+        : 'Todas';
+  }
+
   @override
   void dispose() {
     _buscaController.dispose();
@@ -54,13 +76,19 @@ class _HomePageState extends State<HomePage> {
 
   List<Produto> get _produtosFiltrados {
     final termo = _busca.trim().toLowerCase();
-
-    if (termo.isEmpty) return widget.produtos;
+    final categoria = _categoriaAtiva;
 
     return widget.produtos.where((produto) {
-      return produto.nome.toLowerCase().contains(termo) ||
+      final correspondeCategoria =
+          categoria == 'Todas' || produto.categoria.trim() == categoria;
+
+      final correspondeBusca =
+          termo.isEmpty ||
+          produto.nome.toLowerCase().contains(termo) ||
           produto.vendedor.nome.toLowerCase().contains(termo) ||
           produto.descricao.toLowerCase().contains(termo);
+
+      return correspondeCategoria && correspondeBusca;
     }).toList();
   }
 
@@ -357,7 +385,16 @@ class _HomePageState extends State<HomePage> {
           const SizedBox(width: 4),
         ],
       ),
-      body: produtos.isEmpty ? _buildSemResultados() : _buildLista(produtos),
+      body: Column(
+        children: [
+          _buildFiltroCategoria(),
+          Expanded(
+            child: produtos.isEmpty
+                ? _buildSemResultados()
+                : _buildLista(produtos),
+          ),
+        ],
+      ),
     );
   }
 
@@ -393,6 +430,39 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+  Widget _buildFiltroCategoria() {
+    final categorias = _categorias;
+
+    return SizedBox(
+      height: 60,
+      child: ListView.separated(
+        scrollDirection: Axis.horizontal,
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+        itemCount: categorias.length,
+        separatorBuilder: (_, __) => const SizedBox(width: 8),
+        itemBuilder: (context, index) {
+          final categoria = categorias[index];
+          final selecionada = categoria == _categoriaSelecionada;
+
+          return ChoiceChip(
+            label: Text(categoria),
+            selected: selecionada,
+            selectedColor: const Color(0xFF2E7D32).withOpacity(0.15),
+            labelStyle: TextStyle(
+              color: selecionada ? const Color(0xFF2E7D32) : Colors.black87,
+              fontWeight: selecionada ? FontWeight.bold : FontWeight.normal,
+            ),
+            onSelected: (_) {
+              setState(() {
+                _categoriaSelecionada = categoria;
+              });
+            },
+          );
+        },
+      ),
+    );
+  }
+
   Widget _buildSemResultados() {
     return Center(
       child: Column(
@@ -401,9 +471,10 @@ class _HomePageState extends State<HomePage> {
           Icon(Icons.search_off, size: 80, color: Colors.grey[400]),
           const SizedBox(height: 16),
           Text(
-            _busca.isEmpty
-                ? 'Nenhum produto disponível'
-                : 'Nenhum produto encontrado',
+            _busca.isEmpty &&
+        _categoriaSelecionada == 'Todas'
+    ? 'Nenhum produto disponível'
+    : 'Nenhum produto encontrado',
             style: TextStyle(fontSize: 18, color: Colors.grey[600]),
           ),
         ],

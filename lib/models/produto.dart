@@ -11,6 +11,7 @@ enum UnidadeMedida {
 class Produto {
   String nome;
   UnidadeMedida unidadeMedida;
+  final String categoria;
   String validade;
   String fabricacao;
   double preco;
@@ -23,6 +24,7 @@ class Produto {
   Produto({
     required this.nome,
     required this.unidadeMedida,
+    required this.categoria,
     required this.validade,
     required this.fabricacao,
     required this.preco,
