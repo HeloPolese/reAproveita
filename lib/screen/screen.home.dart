@@ -424,7 +424,7 @@ class _HomePageState extends State<HomePage> {
                   },
                 ),
           border: InputBorder.none,
-          contentPadding: EdgeInsets.zero,
+          contentPadding: const EdgeInsets.only(top: 5),
         ),
       ),
     );

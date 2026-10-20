@@ -41,7 +41,7 @@ class MyApp extends StatelessWidget {
         preco: 8.50,
         quantidadeDisponivel: 10,
         descricao: 'Pão francês fresco do dia.',
-        imagem: '',
+        imagem: 'https://s2-receitas.glbimg.com/-V4nFrbjz9JMuWJnvQxl2NEplg8=/0x0:1280x922/924x0/smart/filters:strip_icc()/i.s3.glbimg.com/v1/AUTH_e84042ef78cb4708aeebdf1c68c6cbd6/internal_photos/bs/2020/U/q/B5doHYQcKDxm0YsOynPA/pao-frances.jpeg',
         vendedor: padaria,
       ),
       Produto(
@@ -53,7 +53,7 @@ class MyApp extends StatelessWidget {
         preco: 5.99,
         quantidadeDisponivel: 3,
         descricao: 'Bananas maduras, ótimas para vitaminas.',
-        imagem: 'https://picsum.photos/200',
+        imagem: 'https://vallefrutas.com.br/_astro/Banana-Prata-1.KqVABvKC_Zg4XYF.webp',
         vendedor: mercado,
       ),
       Produto(
@@ -65,7 +65,7 @@ class MyApp extends StatelessWidget {
         preco: 4.75,
         quantidadeDisponivel: 20,
         descricao: 'Leite integral próximo da validade.',
-        imagem: 'https://picsum.photos/201',
+        imagem: 'https://piracanjuba-institucional-prd.s3.sa-east-1.amazonaws.com/product_images/image/leite-integral-piracanjuba-1l-frente-848x1007px-460.webp',
         vendedor: mercado,
       ),
       Produto(
@@ -77,7 +77,7 @@ class MyApp extends StatelessWidget {
         preco: 15.00,
         quantidadeDisponivel: 0,
         descricao: 'Bolo de cenoura com cobertura de chocolate.',
-        imagem: 'https://picsum.photos/202',
+        imagem: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRRY4w8gSWQ8LeXX2hksmJpVp2WqOwzR2bQtEafCbBKlZi46IsS49qUOek&s=10',
         vendedor: padaria,
       ),
       Produto(
@@ -89,7 +89,7 @@ class MyApp extends StatelessWidget {
         preco: 7.20,
         quantidadeDisponivel: 8,
         descricao: 'Tomates com aparência imperfeita, sabor perfeito.',
-        imagem: 'https://picsum.photos/203',
+        imagem: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQXHpr8M1AaKY962czdwNhWvJ5FYayJw_tlKrSFOm6e3KZ8GxzqQaocu6M&s=10',
         vendedor: mercado,
       ),
     ];

@@ -102,7 +102,9 @@ class _CadastroProdutoPageState extends State<CadastroProdutoPage> {
   }
 
   String? obrigatorio(String? valor) {
-    return valor == null || valor.trim().isEmpty ? 'Preencha este campo.' : null;
+    return valor == null || valor.trim().isEmpty
+        ? 'Preencha este campo.'
+        : null;
   }
 
   // Confere o formato e rejeita datas inexistentes, como 31/02/2026.
@@ -133,7 +135,8 @@ class _CadastroProdutoPageState extends State<CadastroProdutoPage> {
       confirmText: 'Confirmar',
     );
     if (escolhida == null || !mounted) return;
-    campo.text = '${escolhida.day.toString().padLeft(2, '0')}/'
+    campo.text =
+        '${escolhida.day.toString().padLeft(2, '0')}/'
         '${escolhida.month.toString().padLeft(2, '0')}/${escolhida.year}';
   }
 
@@ -141,25 +144,26 @@ class _CadastroProdutoPageState extends State<CadastroProdutoPage> {
     if (!formulario.currentState!.validate()) return;
     FocusScope.of(context).unfocus();
     final existente = widget.produtoAtual;
-    if (existente != null &&
-        !identical(existente.vendedor, widget.vendedor)) {
+    if (existente != null && !identical(existente.vendedor, widget.vendedor)) {
       return;
     }
 
     final valor = double.parse(preco.text.trim().replaceAll(',', '.'));
     final estoque = int.parse(quantidade.text.trim());
-    final produto = existente ?? Produto(
-      nome: nome.text.trim(),
-      unidadeMedida: unidade,
-      validade: validade.text.trim(),
-      categoria: categoriaSelecionada,
-      fabricacao: fabricacao.text.trim(),
-      preco: valor,
-      quantidadeDisponivel: estoque,
-      descricao: descricao.text.trim(),
-      imagem: imagem.text.trim(),
-      vendedor: widget.vendedor,
-    );
+    final produto =
+        existente ??
+        Produto(
+          nome: nome.text.trim(),
+          unidadeMedida: unidade,
+          validade: validade.text.trim(),
+          categoria: categoriaSelecionada,
+          fabricacao: fabricacao.text.trim(),
+          preco: valor,
+          quantidadeDisponivel: estoque,
+          descricao: descricao.text.trim(),
+          imagem: imagem.text.trim(),
+          vendedor: widget.vendedor,
+        );
 
     if (existente != null) {
       // Só altera o objeto original ao salvar. Cancelar não muda o produto.
@@ -208,10 +212,7 @@ class _CadastroProdutoPageState extends State<CadastroProdutoPage> {
           validator: validar ?? obrigatorio,
           decoration: InputDecoration(
             hintText: dica,
-            hintStyle: const TextStyle(
-              color: Color(0xFF758276),
-              fontSize: 14,
-            ),
+            hintStyle: const TextStyle(color: Color(0xFF758276), fontSize: 14),
             prefixIcon: Icon(icone, color: verde, size: 20),
             suffixIcon: botao,
             filled: true,
@@ -255,27 +256,34 @@ class _CadastroProdutoPageState extends State<CadastroProdutoPage> {
           initialValue: categoriaSelecionada,
           isExpanded: true,
           decoration: InputDecoration(
-            prefixIcon: const Icon(Icons.category_outlined, color: verde, size: 20),
+            prefixIcon: const Icon(
+              Icons.category_outlined,
+              color: verde,
+              size: 20,
+            ),
             filled: true,
             fillColor: const Color(0xFFF2F2F2),
-            contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 18),
+            contentPadding: const EdgeInsets.symmetric(
+              horizontal: 16,
+              vertical: 18,
+            ),
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8),
               borderSide: const BorderSide(color: Color(0x8066A638)),
             ),
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8),
-            ),
+            border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8),
               borderSide: const BorderSide(color: verde, width: 2),
             ),
           ),
           items: categorias
-              .map((categoria) => DropdownMenuItem<String>(
-                    value: categoria,
-                    child: Text(categoria),
-                  ))
+              .map(
+                (categoria) => DropdownMenuItem<String>(
+                  value: categoria,
+                  child: Text(categoria),
+                ),
+              )
               .toList(),
           onChanged: (valor) {
             if (valor != null) {
@@ -289,18 +297,20 @@ class _CadastroProdutoPageState extends State<CadastroProdutoPage> {
 
   // Duas colunas no computador e uma coluna nas telas menores.
   Widget colunas(List<Widget> campos) {
-    return LayoutBuilder(builder: (context, limites) {
-      final largura = limites.maxWidth >= 640
-          ? (limites.maxWidth - 24) / 2
-          : limites.maxWidth;
-      return Wrap(
-        spacing: 24,
-        runSpacing: 22,
-        children: campos
-            .map((item) => SizedBox(width: largura, child: item))
-            .toList(),
-      );
-    });
+    return LayoutBuilder(
+      builder: (context, limites) {
+        final largura = limites.maxWidth >= 640
+            ? (limites.maxWidth - 24) / 2
+            : limites.maxWidth;
+        return Wrap(
+          spacing: 24,
+          runSpacing: 22,
+          children: campos
+              .map((item) => SizedBox(width: largura, child: item))
+              .toList(),
+        );
+      },
+    );
   }
 
   Widget secao(String titulo, String descricao, Widget conteudo) {
@@ -340,10 +350,7 @@ class _CadastroProdutoPageState extends State<CadastroProdutoPage> {
               children: [
                 Text(
                   descricao,
-                  style: const TextStyle(
-                    color: Color(0xFF627064),
-                    height: 1.5,
-                  ),
+                  style: const TextStyle(color: Color(0xFF627064), height: 1.5),
                 ),
                 const SizedBox(height: 22),
                 conteudo,
@@ -374,7 +381,7 @@ class _CadastroProdutoPageState extends State<CadastroProdutoPage> {
         surfaceTintColor: Colors.white,
         elevation: 0,
         toolbarHeight: 76,
-        title: const Row(
+        title: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
             DecoratedBox(
@@ -383,8 +390,15 @@ class _CadastroProdutoPageState extends State<CadastroProdutoPage> {
                 shape: BoxShape.circle,
               ),
               child: Padding(
-                padding: EdgeInsets.all(9),
-                child: Icon(Icons.eco_outlined, color: verde, size: 31),
+                padding: EdgeInsets.all(5),
+                child: ClipOval(
+                  child: Image.asset(
+                    'assets/reaproveita.jpeg',
+                    width: 39,
+                    height: 39,
+                    fit: BoxFit.cover,
+                  ),
+                ),
               ),
             ),
             SizedBox(width: 10),
@@ -426,7 +440,9 @@ class _CadastroProdutoPageState extends State<CadastroProdutoPage> {
                     ),
                     const SizedBox(height: 10),
                     Text(
-                      _editando ? 'Edite seu produto.' : 'Cadastre seu produto.',
+                      _editando
+                          ? 'Edite seu produto.'
+                          : 'Cadastre seu produto.',
                       style: const TextStyle(
                         color: verde,
                         fontSize: 32,
@@ -510,10 +526,12 @@ class _CadastroProdutoPageState extends State<CadastroProdutoPage> {
                                     ),
                                   ),
                                   items: UnidadeMedida.values
-                                      .map((opcao) => DropdownMenuItem(
-                                            value: opcao,
-                                            child: Text(rotulo(opcao)),
-                                          ))
+                                      .map(
+                                        (opcao) => DropdownMenuItem(
+                                          value: opcao,
+                                          child: Text(rotulo(opcao)),
+                                        ),
+                                      )
                                       .toList(),
                                   onChanged: (valor) {
                                     if (valor != null) {
@@ -545,14 +563,21 @@ class _CadastroProdutoPageState extends State<CadastroProdutoPage> {
                           dica: 'Ex.: 15,50 — sem separador de milhar',
                           controller: preco,
                           icone: Icons.payments_outlined,
-                          teclado: const TextInputType.numberWithOptions(decimal: true),
+                          teclado: const TextInputType.numberWithOptions(
+                            decimal: true,
+                          ),
                           validar: (valor) {
                             final texto = valor?.trim() ?? '';
-                            if (!RegExp(r'^\d+([.,]\d{1,2})?$').hasMatch(texto)) {
+                            if (!RegExp(r'^\d+([.,]\d{1,2})?$')
+                                .hasMatch(texto)) {
                               return 'Informe um preço com até 2 casas decimais.';
                             }
-                            final numero = double.tryParse(texto.replaceAll(',', '.'));
-                            if (numero == null || !numero.isFinite || numero <= 0) {
+                            final numero = double.tryParse(
+                              texto.replaceAll(',', '.'),
+                            );
+                            if (numero == null ||
+                                !numero.isFinite ||
+                                numero <= 0) {
                               return 'O preço deve ser maior que zero.';
                             }
                             return null;
@@ -662,7 +687,9 @@ class _CadastroProdutoPageState extends State<CadastroProdutoPage> {
                                 : Icons.add_circle_outline,
                           ),
                           label: Text(
-                            _editando ? 'Salvar alterações' : 'Cadastrar produto',
+                            _editando
+                                ? 'Salvar alterações'
+                                : 'Cadastrar produto',
                           ),
                           style: ElevatedButton.styleFrom(
                             backgroundColor: verde,
