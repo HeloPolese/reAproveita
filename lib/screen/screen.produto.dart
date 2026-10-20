@@ -377,7 +377,7 @@ class _CadastroProdutoPageState extends State<CadastroProdutoPage> {
     return Scaffold(
       backgroundColor: const Color(0xFFF2F2F2),
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: const Color(0xFF077233),
         surfaceTintColor: Colors.white,
         elevation: 0,
         toolbarHeight: 76,
@@ -386,7 +386,6 @@ class _CadastroProdutoPageState extends State<CadastroProdutoPage> {
           children: [
             DecoratedBox(
               decoration: BoxDecoration(
-                color: Color(0xFFF2E857),
                 shape: BoxShape.circle,
               ),
               child: Padding(
@@ -394,8 +393,8 @@ class _CadastroProdutoPageState extends State<CadastroProdutoPage> {
                 child: ClipOval(
                   child: Image.asset(
                     'assets/reaproveita.png',
-                    width: 39,
-                    height: 39,
+                    width: 50,
+                    height: 50,
                     fit: BoxFit.cover,
                   ),
                 ),

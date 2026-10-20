@@ -907,13 +907,13 @@ class _HomePageState extends State<HomePage> {
 
     if (caminho.isEmpty) return placeholder;
 
-    if (caminho.startsWith('http')) {
+   /* if (caminho.startsWith('http')) {
       return Image.network(
         caminho,
         fit: BoxFit.cover,
         errorBuilder: (_, __, ___) => placeholder,
       );
-    }
+    }*/
 
     return Image.network(
       caminho,
