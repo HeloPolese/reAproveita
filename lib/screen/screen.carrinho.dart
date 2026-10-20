@@ -88,8 +88,8 @@ class _CarrinhoPageState extends State<CarrinhoPage> {
         children: [
           Image.asset(
             'assets/reaproveita.jpeg',
-            height: 32,
-            width: 32,
+            height: 42,
+            width: 42,
             fit: BoxFit.contain,
             errorBuilder: (_, __, ___) => const SizedBox.shrink(),
           ),

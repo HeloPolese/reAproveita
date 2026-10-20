@@ -354,7 +354,20 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         backgroundColor: verde,
         foregroundColor: Colors.white,
-        titleSpacing: 12,
+        titleSpacing: 8,
+        leadingWidth: 56,
+        leading: Padding(
+          padding: const EdgeInsets.only(left: 7),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(12),
+            child: Image.asset(
+              'assets/reaproveita.jpeg',
+              width: 42,
+              height: 42,
+              fit: BoxFit.contain,
+            ),
+          ),
+        ),
         title: _buildCampoBusca(),
         actions: [
           IconButton(
@@ -439,7 +452,11 @@ class _HomePageState extends State<HomePage> {
                   sliver: SliverLayoutBuilder(
                     builder: (context, constraints) {
                       final largura = constraints.crossAxisExtent;
-                      final colunas = largura >= 700 ? 4 : largura >= 500 ? 3 : 2;
+                      final colunas = largura >= 700
+                          ? 4
+                          : largura >= 500
+                          ? 3
+                          : 2;
                       return SliverGrid(
                         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: colunas,
@@ -448,7 +465,8 @@ class _HomePageState extends State<HomePage> {
                           childAspectRatio: largura < 370 ? 0.53 : 0.59,
                         ),
                         delegate: SliverChildBuilderDelegate(
-                          (context, index) => _buildProdutoGrade(produtos[index]),
+                          (context, index) =>
+                              _buildProdutoGrade(produtos[index]),
                           childCount: produtos.length,
                         ),
                       );
@@ -497,7 +515,7 @@ class _HomePageState extends State<HomePage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const Text(
-                  'Do produtor para você',
+                  'Do produtor para você!',
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 21,
@@ -508,7 +526,7 @@ class _HomePageState extends State<HomePage> {
                 const SizedBox(
                   width: 245,
                   child: Text(
-                    'Encontre alimentos fresquinhos e valorize os produtores locais.',
+                    'Encontre alimentos e ajude a combater o desperdício.',
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 13,
@@ -676,8 +694,9 @@ class _HomePageState extends State<HomePage> {
                     style: TextStyle(
                       fontSize: 11,
                       color: selecionada ? verde : Colors.black87,
-                      fontWeight:
-                          selecionada ? FontWeight.bold : FontWeight.w500,
+                      fontWeight: selecionada
+                          ? FontWeight.bold
+                          : FontWeight.w500,
                     ),
                   ),
                 ],
@@ -697,10 +716,9 @@ class _HomePageState extends State<HomePage> {
           Icon(Icons.search_off, size: 80, color: Colors.grey[400]),
           const SizedBox(height: 16),
           Text(
-            _busca.isEmpty &&
-        _categoriaSelecionada == 'Todas'
-    ? 'Nenhum produto disponível'
-    : 'Nenhum produto encontrado',
+            _busca.isEmpty && _categoriaSelecionada == 'Todas'
+                ? 'Nenhum produto disponível'
+                : 'Nenhum produto encontrado',
             style: TextStyle(fontSize: 18, color: Colors.grey[600]),
           ),
         ],
@@ -731,9 +749,7 @@ class _HomePageState extends State<HomePage> {
       elevation: 1.5,
       color: Colors.white,
       clipBehavior: Clip.antiAlias,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(15),
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -775,10 +791,7 @@ class _HomePageState extends State<HomePage> {
                           }
                         },
                         itemBuilder: (_) => const [
-                          PopupMenuItem(
-                            value: 'editar',
-                            child: Text('Editar'),
-                          ),
+                          PopupMenuItem(value: 'editar', child: Text('Editar')),
                           PopupMenuItem(
                             value: 'excluir',
                             child: Text('Excluir'),
@@ -896,7 +909,7 @@ class _HomePageState extends State<HomePage> {
       );
     }
 
-    return Image.asset(
+    return Image.network(
       caminho,
       fit: BoxFit.cover,
       errorBuilder: (_, __, ___) => placeholder,
