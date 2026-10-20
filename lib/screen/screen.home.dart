@@ -385,13 +385,166 @@ class _HomePageState extends State<HomePage> {
           const SizedBox(width: 4),
         ],
       ),
-      body: Column(
+      body: produtos.isEmpty
+          ? Column(
+              children: [
+                _buildFiltroCategoria(),
+                Expanded(child: _buildSemResultados()),
+              ],
+            )
+          : CustomScrollView(
+              slivers: [
+                SliverToBoxAdapter(child: _buildBannerDestaque()),
+                SliverToBoxAdapter(
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(16, 20, 16, 8),
+                    child: Text(
+                      'Categorias',
+                      style: TextStyle(
+                        color: Colors.green.shade900,
+                        fontSize: 19,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ),
+                SliverToBoxAdapter(child: _buildFiltroCategoria()),
+                SliverToBoxAdapter(
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(16, 12, 16, 4),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Text(
+                          'Nossos produtos',
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            color: Color(0xFF24452B),
+                          ),
+                        ),
+                        Text(
+                          '${produtos.length} ${produtos.length == 1 ? 'produto' : 'produtos'}',
+                          style: TextStyle(
+                            fontSize: 12,
+                            color: Colors.grey.shade600,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                SliverPadding(
+                  padding: const EdgeInsets.fromLTRB(12, 8, 12, 24),
+                  sliver: SliverLayoutBuilder(
+                    builder: (context, constraints) {
+                      final largura = constraints.crossAxisExtent;
+                      final colunas = largura >= 700 ? 4 : largura >= 500 ? 3 : 2;
+                      return SliverGrid(
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: colunas,
+                          crossAxisSpacing: 10,
+                          mainAxisSpacing: 10,
+                          childAspectRatio: largura < 370 ? 0.53 : 0.59,
+                        ),
+                        delegate: SliverChildBuilderDelegate(
+                          (context, index) => _buildProdutoGrade(produtos[index]),
+                          childCount: produtos.length,
+                        ),
+                      );
+                    },
+                  ),
+                ),
+              ],
+            ),
+    );
+  }
+
+  Widget _buildBannerDestaque() {
+    return Container(
+      margin: const EdgeInsets.fromLTRB(12, 14, 12, 4),
+      height: 158,
+      decoration: BoxDecoration(
+        gradient: const LinearGradient(
+          colors: [Color(0xFF075C2B), Color(0xFF48A34A)],
+          begin: Alignment.centerLeft,
+          end: Alignment.centerRight,
+        ),
+        borderRadius: BorderRadius.circular(18),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.green.withOpacity(0.18),
+            blurRadius: 12,
+            offset: const Offset(0, 5),
+          ),
+        ],
+      ),
+      child: Stack(
         children: [
-          _buildFiltroCategoria(),
-          Expanded(
-            child: produtos.isEmpty
-                ? _buildSemResultados()
-                : _buildLista(produtos),
+          Positioned(
+            right: -8,
+            bottom: -18,
+            child: Icon(
+              Icons.eco,
+              size: 150,
+              color: Colors.white.withOpacity(0.12),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(18),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Text(
+                  'Do produtor para você',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 21,
+                    fontWeight: FontWeight.w800,
+                  ),
+                ),
+                const SizedBox(height: 7),
+                const SizedBox(
+                  width: 245,
+                  child: Text(
+                    'Encontre alimentos fresquinhos e valorize os produtores locais.',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 13,
+                      height: 1.35,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 12),
+                TextButton(
+                  onPressed: () {
+                    setState(() {
+                      _categoriaSelecionada = 'Todas';
+                      _busca = '';
+                      _buscaController.clear();
+                    });
+                  },
+                  style: TextButton.styleFrom(
+                    backgroundColor: const Color(0xFFF2E857),
+                    foregroundColor: const Color(0xFF174522),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 14,
+                      vertical: 8,
+                    ),
+                    minimumSize: Size.zero,
+                    tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(9),
+                    ),
+                  ),
+                  child: const Text(
+                    'Explorar produtos',
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
+                  ),
+                ),
+              ],
+            ),
           ),
         ],
       ),
@@ -430,33 +583,106 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+  String _imagemCategoria(String categoria) {
+    final nome = categoria.toLowerCase();
+
+    // Imagens remotas ilustrativas. Para funcionamento offline,
+    // substitua esses endereços por imagens locais em assets.
+    if (nome == 'todas') {
+      return 'https://images.openai.com/static-rsc-4/i5zoprJBgPEwhYDCnusnMcQzgoSUTvZIq90L4mAXwf6vyDH_qM4Q3KNP7AvUhqXDTL81vNUD6LlNA0e7IPfcW8zH63Wl_3tnCHk9YSyYPaixO5oHCuE588kjUqnsYvc_cmzg3hKfrzfF_bKPD_YNoj_GciRlVeJo1UkDabWlIA7hACjme3_T96y9xGnUjjPx?purpose=fullsize';
+    }
+    if (nome.contains('frut')) {
+      return 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQrCFhtZcP9L3wZWkkSZC4yJ-67OYgceegkE60tgHJoMg&s=10';
+    }
+    if (nome.contains('legum')) {
+      return 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR0W2h1FgdrOHLUqIJGRIH8uqTWjXM3MJDayLHMG_JFlg&s=10';
+    }
+    if (nome.contains('lat')) {
+      return 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQYL-p59jkvXoNPq5wT3d8ZbdoGxvdgGyHKFtdObCPZNg&s=10';
+    }
+    if (nome.contains('pada')) {
+      return 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS55RrL98vbCrguqb1F-tyYqUndFPYMH9h8tTMgpSk3vA&s=10';
+    }
+    if (nome.contains('carn')) {
+      return 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSbdVKAwseAdTDoo-dDjiL8b4mZqbCbajRbT9vYQ3HnSQ&s=10';
+    }
+    if (nome.contains('bebidas')) {
+      return 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSSxuXz6gQHTFflVexqI6lzYsrrHpZ-kliQmUC4Kxb2bA&s=10';
+    }
+
+    return 'https://images.unsplash.com/photo-1540420773420-3366772f4999?w=240&h=240&fit=crop';
+  }
+
   Widget _buildFiltroCategoria() {
     final categorias = _categorias;
 
     return SizedBox(
-      height: 60,
+      height: 112,
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
         itemCount: categorias.length,
-        separatorBuilder: (_, __) => const SizedBox(width: 8),
+        separatorBuilder: (_, __) => const SizedBox(width: 12),
         itemBuilder: (context, index) {
           final categoria = categorias[index];
-          final selecionada = categoria == _categoriaSelecionada;
+          final selecionada = categoria == _categoriaAtiva;
 
-          return ChoiceChip(
-            label: Text(categoria),
-            selected: selecionada,
-            selectedColor: const Color(0xFF2E7D32).withOpacity(0.15),
-            labelStyle: TextStyle(
-              color: selecionada ? const Color(0xFF2E7D32) : Colors.black87,
-              fontWeight: selecionada ? FontWeight.bold : FontWeight.normal,
-            ),
-            onSelected: (_) {
+          return InkWell(
+            borderRadius: BorderRadius.circular(14),
+            onTap: () {
               setState(() {
                 _categoriaSelecionada = categoria;
               });
             },
+            child: SizedBox(
+              width: 76,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  AnimatedContainer(
+                    duration: const Duration(milliseconds: 180),
+                    width: 64,
+                    height: 64,
+                    padding: const EdgeInsets.all(3),
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      border: Border.all(
+                        color: selecionada ? verde : Colors.grey.shade300,
+                        width: selecionada ? 3 : 1,
+                      ),
+                    ),
+                    child: ClipOval(
+                      child: Image.network(
+                        _imagemCategoria(categoria),
+                        fit: BoxFit.cover,
+                        errorBuilder: (_, __, ___) => Container(
+                          color: const Color(0xFFE8F5E9),
+                          alignment: Alignment.center,
+                          child: Icon(
+                            Icons.eco_outlined,
+                            color: verde,
+                            size: 28,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 6),
+                  Text(
+                    categoria,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 11,
+                      color: selecionada ? verde : Colors.black87,
+                      fontWeight:
+                          selecionada ? FontWeight.bold : FontWeight.w500,
+                    ),
+                  ),
+                ],
+              ),
+            ),
           );
         },
       ),
@@ -483,140 +709,173 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _buildLista(List<Produto> produtos) {
-    return ListView.builder(
+    return GridView.builder(
       padding: const EdgeInsets.all(12),
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 2,
+        crossAxisSpacing: 10,
+        mainAxisSpacing: 10,
+        childAspectRatio: 0.58,
+      ),
       itemCount: produtos.length,
-      itemBuilder: (context, index) => _buildProduto(produtos[index]),
+      itemBuilder: (context, index) => _buildProdutoGrade(produtos[index]),
     );
   }
 
-  Widget _buildProduto(Produto produto) {
+  Widget _buildProdutoGrade(Produto produto) {
     final semEstoque = produto.quantidadeDisponivel <= 0;
     final unidade = _formatarUnidade(produto.unidadeMedida);
 
     return Card(
-      margin: const EdgeInsets.only(bottom: 12),
-      elevation: 2,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-      child: Padding(
-        padding: const EdgeInsets.all(12),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(8),
-              child: SizedBox(
-                width: 90,
-                height: 90,
-                child: _buildImagem(produto.imagem),
-              ),
+      margin: EdgeInsets.zero,
+      elevation: 1.5,
+      color: Colors.white,
+      clipBehavior: Clip.antiAlias,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(15),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Expanded(
+            flex: 5,
+            child: Stack(
+              fit: StackFit.expand,
+              children: [
+                _buildImagem(produto.imagem),
+                if (semEstoque)
+                  Container(
+                    color: Colors.black45,
+                    alignment: Alignment.center,
+                    child: const Text(
+                      'Indisponível',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                if (_meuProduto(produto))
+                  Positioned(
+                    top: 4,
+                    right: 4,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white.withOpacity(0.94),
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: PopupMenuButton<String>(
+                        padding: EdgeInsets.zero,
+                        icon: const Icon(Icons.more_vert, size: 20),
+                        onSelected: (acao) {
+                          if (acao == 'editar') {
+                            _editarProduto(produto);
+                          } else if (acao == 'excluir') {
+                            _excluirProduto(produto);
+                          }
+                        },
+                        itemBuilder: (_) => const [
+                          PopupMenuItem(
+                            value: 'editar',
+                            child: Text('Editar'),
+                          ),
+                          PopupMenuItem(
+                            value: 'excluir',
+                            child: Text('Excluir'),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+              ],
             ),
-            const SizedBox(width: 12),
-            Expanded(
+          ),
+          Expanded(
+            flex: 6,
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(10, 9, 10, 9),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     produto.nome,
-                    maxLines: 2,
+                    maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: const TextStyle(
-                      fontSize: 16,
+                      fontSize: 15,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  const SizedBox(height: 2),
+                  const SizedBox(height: 3),
                   if (produto.descricao.trim().isNotEmpty)
                     Text(
                       produto.descricao,
-                      maxLines: 3,
+                      maxLines: 2,
                       overflow: TextOverflow.ellipsis,
-                      style: TextStyle(fontSize: 12, color: Colors.grey[600]),
+                      style: TextStyle(
+                        fontSize: 11,
+                        color: Colors.grey.shade600,
+                      ),
                     ),
-                  const SizedBox(height: 4),
+                  const SizedBox(height: 3),
                   Text(
                     'Validade: ${produto.validade}',
-                    style: TextStyle(fontSize: 12, color: Colors.grey[600]),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(fontSize: 10, color: Colors.grey.shade600),
                   ),
+                  const Spacer(),
+                  Text(
+                    '${_formatarPreco(produto.preco)} / $unidade',
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w800,
+                      color: verde,
+                    ),
+                  ),
+                  const SizedBox(height: 7),
+                  SizedBox(
+                    width: double.infinity,
+                    height: 36,
+                    child: ElevatedButton.icon(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: verde,
+                        foregroundColor: Colors.white,
+                        disabledBackgroundColor: Colors.grey.shade300,
+                        padding: const EdgeInsets.symmetric(horizontal: 6),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(9),
+                        ),
+                      ),
+                      onPressed: semEstoque
+                          ? null
+                          : () => _adicionarAoCarrinho(produto),
+                      icon: const Icon(Icons.add_shopping_cart, size: 15),
+                      label: const FittedBox(
+                        fit: BoxFit.scaleDown,
+                        child: Text('Adicionar'),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 4),
                   Text(
                     semEstoque
-                        ? 'Indisponível'
-                        : 'Disponível: ${produto.quantidadeDisponivel} $unidade',
+                        ? 'Sem estoque'
+                        : '${produto.quantidadeDisponivel} $unidade disponíveis',
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                     style: TextStyle(
-                      fontSize: 12,
-                      color: semEstoque ? Colors.red : Colors.grey[600],
+                      fontSize: 10,
+                      color: semEstoque ? Colors.red : Colors.grey.shade600,
                     ),
                   ),
-                  const SizedBox(height: 8),
-                  Wrap(
-                    spacing: 16,
-                    runSpacing: 8,
-                    crossAxisAlignment: WrapCrossAlignment.center,
-                    children: [
-                      Text(
-                        '${_formatarPreco(produto.preco)} / $unidade',
-                        style: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          color: verde,
-                        ),
-                      ),
-                      ElevatedButton.icon(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: verde,
-                          foregroundColor: Colors.white,
-                          padding: const EdgeInsets.symmetric(horizontal: 12),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                        ),
-                        onPressed: semEstoque
-                            ? null
-                            : () => _adicionarAoCarrinho(produto),
-                        icon: const Icon(Icons.add_shopping_cart, size: 18),
-                        label: const Text('Adicionar'),
-                      ),
-                    ],
-                  ),
-
-                  // Gerenciamento apenas dos produtos do usuário da sessão.
-                  if (_meuProduto(produto)) ...[
-                    const SizedBox(height: 8),
-                    Wrap(
-                      spacing: 8,
-                      children: [
-                        TextButton.icon(
-                          onPressed: () => _editarProduto(produto),
-                          icon: const Icon(
-                            Icons.edit_outlined,
-                            color: verde,
-                            size: 18,
-                          ),
-                          label: const Text(
-                            'Editar',
-                            style: TextStyle(color: verde),
-                          ),
-                        ),
-                        TextButton.icon(
-                          onPressed: () => _excluirProduto(produto),
-                          icon: const Icon(
-                            Icons.delete_outline,
-                            color: Colors.red,
-                            size: 18,
-                          ),
-                          label: const Text(
-                            'Excluir',
-                            style: TextStyle(color: Colors.red),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
                 ],
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
