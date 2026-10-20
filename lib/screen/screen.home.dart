@@ -354,21 +354,24 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         backgroundColor: verde,
         foregroundColor: Colors.white,
-        titleSpacing: 8,
         leadingWidth: 56,
         leading: Padding(
           padding: const EdgeInsets.only(left: 7),
           child: ClipRRect(
             borderRadius: BorderRadius.circular(12),
             child: Image.asset(
-              'assets/reaproveita.jpeg',
-              width: 42,
-              height: 42,
+              'assets/reaproveita.png',
+              width: 50,
+              height: 50,
               fit: BoxFit.contain,
             ),
           ),
         ),
-        title: _buildCampoBusca(),
+        titleSpacing: 0,
+        title: Padding(
+          padding: const EdgeInsets.only(left: 30),
+          child: _buildCampoBusca(),
+        ),
         actions: [
           IconButton(
             tooltip: 'Carrinho',
@@ -481,7 +484,7 @@ class _HomePageState extends State<HomePage> {
   Widget _buildBannerDestaque() {
     return Container(
       margin: const EdgeInsets.fromLTRB(12, 14, 12, 4),
-      height: 158,
+      height: 200,
       decoration: BoxDecoration(
         gradient: const LinearGradient(
           colors: [Color(0xFF075C2B), Color(0xFF48A34A)],
@@ -515,10 +518,10 @@ class _HomePageState extends State<HomePage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const Text(
-                  'Do produtor para você!',
+                  'Menos disperdício, mais aproveitamento!',
                   style: TextStyle(
                     color: Colors.white,
-                    fontSize: 21,
+                    fontSize: 18,
                     fontWeight: FontWeight.w800,
                   ),
                 ),
@@ -526,7 +529,7 @@ class _HomePageState extends State<HomePage> {
                 const SizedBox(
                   width: 245,
                   child: Text(
-                    'Encontre alimentos e ajude a combater o desperdício.',
+                    'No ReAproveita, alimentos ganham novas oportunidades. Encontre produtos, aproveite ofertas e ajude a reduzir o desperdício de alimentos.',
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 13,
@@ -570,32 +573,35 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _buildCampoBusca() {
-    return Container(
+    return SizedBox(
+      width: 210,
       height: 40,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(20),
-      ),
-      child: TextField(
-        controller: _buscaController,
-        onChanged: (valor) => setState(() => _busca = valor),
-        style: const TextStyle(color: Colors.black87, fontSize: 15),
-        textInputAction: TextInputAction.search,
-        decoration: InputDecoration(
-          hintText: 'Buscar produtos',
-          hintStyle: TextStyle(color: Colors.grey[500], fontSize: 15),
-          prefixIcon: Icon(Icons.search, color: Colors.grey[600]),
-          suffixIcon: _busca.isEmpty
-              ? null
-              : IconButton(
-                  icon: Icon(Icons.close, size: 20, color: Colors.grey[600]),
-                  onPressed: () {
-                    _buscaController.clear();
-                    setState(() => _busca = '');
-                  },
-                ),
-          border: InputBorder.none,
-          contentPadding: const EdgeInsets.only(top: 5),
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(20),
+        ),
+        child: TextField(
+          controller: _buscaController,
+          onChanged: (valor) => setState(() => _busca = valor),
+          style: const TextStyle(color: Colors.black87, fontSize: 15),
+          textInputAction: TextInputAction.search,
+          decoration: InputDecoration(
+            hintText: 'Buscar produtos',
+            hintStyle: TextStyle(color: Colors.grey[500], fontSize: 15),
+            prefixIcon: Icon(Icons.search, color: Colors.grey[600]),
+            suffixIcon: _busca.isEmpty
+                ? null
+                : IconButton(
+                    icon: Icon(Icons.close, size: 20, color: Colors.grey[600]),
+                    onPressed: () {
+                      _buscaController.clear();
+                      setState(() => _busca = '');
+                    },
+                  ),
+            border: InputBorder.none,
+            contentPadding: const EdgeInsets.only(top: 5),
+          ),
         ),
       ),
     );

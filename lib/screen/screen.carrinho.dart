@@ -13,7 +13,7 @@ class CarrinhoPage extends StatefulWidget {
 }
 
 class _CarrinhoPageState extends State<CarrinhoPage> {
-  static const Color verde = Color(0xFF2E7D32);
+  static const Color verde = Color(0xFF027333);
 
   String _formatarPreco(double valor) {
     return 'R\$ ${valor.toStringAsFixed(2).replaceAll('.', ',')}';
@@ -87,7 +87,7 @@ class _CarrinhoPageState extends State<CarrinhoPage> {
         mainAxisSize: MainAxisSize.min,
         children: [
           Image.asset(
-            'assets/reaproveita.jpeg',
+            'assets/reaproveita.png',
             height: 42,
             width: 42,
             fit: BoxFit.contain,

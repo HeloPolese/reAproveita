@@ -393,7 +393,7 @@ class _CadastroProdutoPageState extends State<CadastroProdutoPage> {
                 padding: EdgeInsets.all(5),
                 child: ClipOval(
                   child: Image.asset(
-                    'assets/reaproveita.jpeg',
+                    'assets/reaproveita.png',
                     width: 39,
                     height: 39,
                     fit: BoxFit.cover,
