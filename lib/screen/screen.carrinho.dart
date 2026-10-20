@@ -86,9 +86,11 @@ class _CarrinhoPageState extends State<CarrinhoPage> {
           title: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Image.network(
-            'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQkVexxzbg3jvRGCioSPljjTfsjn7CWC45h3L40QZwXjQ&s=10',
+          Image.asset(
+            'assets/reaproveita.jpeg',
             height: 32,
+            width: 32,
+            fit: BoxFit.contain,
             errorBuilder: (_, __, ___) => const SizedBox.shrink(),
           ),
           const SizedBox(width: 8),
@@ -381,7 +383,7 @@ class _CarrinhoPageState extends State<CarrinhoPage> {
     setState(() => widget.carrinho.limparCarrinho());
   }
 
-  void _finalizarCompra() {
+  Future<void> _finalizarCompra() async {
   final itens = widget.carrinho.listagem;
 
   if (itens.isEmpty) {
@@ -422,6 +424,11 @@ class _CarrinhoPageState extends State<CarrinhoPage> {
       content: Text('Compra finalizada com sucesso!'),
     ),
   );
+
+  // Exibe a mensagem do Pix antes de sair da tela.
+  await _mostrarMensagemPix();
+
+  if (!mounted) return;
 
   // Volta para a Home, que atualiza a lista.
   Navigator.pop(context);
