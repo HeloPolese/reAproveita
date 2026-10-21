@@ -1,7 +1,9 @@
+
 import 'vendedor.dart';
 
 class Produto {
   String nome;
+  String categoria;
   String unidadeMedida;
   String validade;
   String fabricacao;
@@ -14,6 +16,7 @@ class Produto {
 
   Produto({
     required this.nome,
+    required this.categoria,
     required this.unidadeMedida,
     required this.validade,
     required this.fabricacao,

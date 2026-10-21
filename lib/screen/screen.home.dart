@@ -25,6 +25,19 @@ class _HomePageState extends State<HomePage> {
   final TextEditingController _buscaController = TextEditingController();
   String _busca = '';
 
+  String _categoriaSelecionada = 'Todas';
+
+List<String> get _categorias {
+  final categorias = widget.produtos
+      .map((p) => p.categoria.trim())
+      .where((categoria) => categoria.isNotEmpty)
+      .toSet()
+      .toList()
+    ..sort();
+
+  return ['Todas', ...categorias];
+}
+
   @override
   void dispose() {
     _buscaController.dispose();
@@ -36,16 +49,22 @@ class _HomePageState extends State<HomePage> {
   }
 
   // Lista filtrada pelo texto da pesquisa (nome, vendedor ou descrição)
-  List<Produto> get _produtosFiltrados {
-    final termo = _busca.trim().toLowerCase();
-    if (termo.isEmpty) return widget.produtos;
+List<Produto> get _produtosFiltrados {
+  final termo = _busca.trim().toLowerCase();
 
-    return widget.produtos.where((p) {
-      return p.nome.toLowerCase().contains(termo) ||
-          p.vendedor.nome.toLowerCase().contains(termo) ||
-          p.descricao.toLowerCase().contains(termo);
-    }).toList();
-  }
+  return widget.produtos.where((p) {
+    final correspondeCategoria =
+        _categoriaSelecionada == 'Todas' ||
+        p.categoria.toLowerCase().trim() == _categoriaSelecionada;
+
+    final correspondeTexto = termo.isEmpty ||
+        p.nome.toLowerCase().contains(termo) ||
+        p.vendedor.nome.toLowerCase().contains(termo) ||
+        p.descricao.toLowerCase().contains(termo);
+
+    return correspondeCategoria && correspondeTexto;
+  }).toList();
+}
 
   // Soma das quantidades de todos os itens do carrinho (para o selo do ícone)
   int get _totalItensCarrinho {
@@ -148,8 +167,16 @@ class _HomePageState extends State<HomePage> {
           const SizedBox(width: 4),
         ],
       ),
-      body: produtos.isEmpty ? _buildSemResultados() : _buildLista(produtos),
-    );
+body: Column(
+  children: [
+    _buildFiltroCategoria(),
+    Expanded(
+      child: produtos.isEmpty
+          ? _buildSemResultados()
+          : _buildLista(produtos),
+    ),
+  ],
+),    );
   }
 
   Widget _buildCampoBusca() {
@@ -184,6 +211,50 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+  Widget _buildFiltroCategoria() {
+  final categorias = _categorias;
+
+  return SizedBox(
+    height: 60,
+    child: ListView.separated(
+      scrollDirection: Axis.horizontal,
+      padding: const EdgeInsets.symmetric(
+        horizontal: 12,
+        vertical: 8,
+      ),
+      itemCount: categorias.length,
+      separatorBuilder: (_, __) =>
+          const SizedBox(width: 8),
+      itemBuilder: (context, index) {
+        final categoria = categorias[index];
+        final selecionada =
+            categoria == _categoriaSelecionada;
+
+        return ChoiceChip(
+          label: Text(categoria),
+          selected: selecionada,
+          selectedColor: const Color(0xFF2E7D32)
+              .withOpacity(0.15),
+          labelStyle: TextStyle(
+            color: selecionada
+                ? const Color(0xFF2E7D32)
+                : Colors.black87,
+            fontWeight: selecionada
+                ? FontWeight.bold
+                : FontWeight.normal,
+          ),
+          onSelected: (_) {
+            setState(() {
+              _categoriaSelecionada = categoria;
+            });
+          },
+        );
+      },
+    ),
+  );
+}
+
+
   Widget _buildSemResultados() {
     return Center(
       child: Column(
@@ -192,9 +263,10 @@ class _HomePageState extends State<HomePage> {
           Icon(Icons.search_off, size: 80, color: Colors.grey[400]),
           const SizedBox(height: 16),
           Text(
-            _busca.isEmpty
-                ? 'Nenhum produto disponível'
-                : 'Nenhum produto encontrado',
+          _busca.isEmpty &&
+                  _categoriaSelecionada == 'Todas'
+              ? 'Nenhum produto disponível'
+              : 'Nenhum produto encontrado',
             style: TextStyle(fontSize: 18, color: Colors.grey[600]),
           ),
         ],
