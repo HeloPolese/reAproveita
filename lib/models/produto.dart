@@ -24,7 +24,7 @@ class Produto {
   Produto({
     required this.nome,
     required this.unidadeMedida,
-    required this.categoria,
+    required this.categoria, // Pedro fez essa parte de categoria.
     required this.validade,
     required this.fabricacao,
     required this.preco,
